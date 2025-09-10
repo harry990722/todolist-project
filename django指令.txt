@@ -19,3 +19,11 @@ python manage.py createsuperuser
 
 6.新增資料表
 python manage.py makemigrations
+
+7.啟動資料庫互動模式
+python manage.py shell
+from todo.models import Todo <== 引用資料表
+使用:
+1.Todo.objects.all()
+2.Todo.objects.get(id=1) <= 不存在會報錯
+3.Todo.objects.filter(id=1) <= 不存在不會報錯(為空串列)
