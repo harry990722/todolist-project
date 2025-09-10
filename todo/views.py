@@ -4,6 +4,17 @@ import json
 from .models import Todo
 
 
+# 1.新增todo.html
+# 2.將todo傳出到{{todo}}
+def view_todo(request, id):
+    todo = None
+    try:
+        todo = Todo.objects.get(id=id)
+    except Exception as e:
+        print(e)
+    return render(request, "todo/view_todo.html", {"todo": todo})
+
+
 def todolist(request):
     todos = Todo.objects.all()
 
