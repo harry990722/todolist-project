@@ -19,12 +19,20 @@ def create_todo(request):
 
 
 def view_todo(request, id):
-    todo = None
+    message = ""
     try:
         todo = Todo.objects.get(id=id)
+        form = TodoForm(instance=todo)
     except Exception as e:
         print(e)
-    return render(request, "todo/view_todo.html", {"todo": todo})
+
+    if request.method == "POST":
+        form = TodoForm(request.POST, instance=todo)
+        form.save()
+        message = "更新成功!"
+    return render(
+        request, "todo/view_todo.html", {"todo": todo, "form": form, "message": message}
+    )
 
 
 def todolist(request):
