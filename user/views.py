@@ -4,8 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
 
+def user_logout(request):
+    logout(request)
+
+    return redirect("user-login")
+
+
 def user_login(request):
     message = ""
+
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -16,6 +23,7 @@ def user_login(request):
             login(request, user)
             message = "登入成功!"
             return redirect("todolist")
+
     return render(request, "user/login.html", {"message": message})
 
 
@@ -29,9 +37,9 @@ def user_register(request):
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
-        # 密碼不能少於8個字元，且兩次密碼相同
+        # 密碼不能少於8各字元，且兩次密碼相同
         if len(password1) < 8 or len(password2) < 8:
-            message = "密碼不能少於8個字元!"
+            message = "密碼不能少於8各字元!"
         elif password1 != password2:
             message = "兩次密碼不相同!"
         else:
@@ -41,6 +49,7 @@ def user_register(request):
                 User.objects.create_user(username=username, password=password1).save()
                 message = "使用者註冊成功!"
                 return redirect("user-login")
-        # 使用者名稱已經存在
+
+            # 使用者名稱已經存在
 
     return render(request, "user/register.html", {"form": form, "message": message})
