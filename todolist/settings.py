@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
 
 # import pymysql
 
@@ -18,7 +21,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -29,7 +32,7 @@ SECRET_KEY = "django-insecure-w@lxr_+5-xp5i7$!qw7e(g5_k(xqwf#zvjy!#es85f2x4k$&z)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["todolist-project-6vqs.onrender.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "todolist-project-6vqs.onrender.com"]
 
 
 # Application definition
@@ -79,23 +82,24 @@ WSGI_APPLICATION = "todolist.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "defaultdb",
-        "USER": "avnadmin",
-        "PASSWORD": "AVNS_M2BtU4CFe_Uot0Hf6qI",
-        "HOST": "mysql-4b43e3-harry99072222-e5a9.i.aivencloud.com",
-        "PORT": 17191,
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("NAME"),
+            "USER": os.environ.get("USER"),
+            "PASSWORD": os.environ.get("PASSWORD"),
+            "HOST": os.environ.get("HOST"),
+            "PORT": os.environ.get("PORT"),
+        }
     }
-}
 
 
 # Password validation
