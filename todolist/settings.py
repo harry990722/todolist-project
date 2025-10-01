@@ -30,7 +30,7 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = "django-insecure-w@lxr_+5-xp5i7$!qw7e(g5_k(xqwf#zvjy!#es85f2x4k$&z)"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "todolist-project-6vqs.onrender.com"]
 
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "todo.apps.TodoConfig",
     "user.apps.UserConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
